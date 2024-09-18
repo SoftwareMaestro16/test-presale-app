@@ -5,12 +5,12 @@ import { getJettonBalance } from './tonapi';
 
 interface HeaderProps {
     setBalance: (balance: number | null) => void;
-    setAddress: (address: string) => void; // New prop for setting the address
+    setAddress: (address: string) => void; 
 }
 
 export const Header = ({ setBalance, setAddress }: HeaderProps) => {
     const wallet = useTonWallet();
-    const jettonAddress = '0:ca1fae2684c9bfd7d83053d5735df19780c1260f3daf338b150084c42b6ab473'; // Replace with your jetton address
+    const jettonAddress = '0:ca1fae2684c9bfd7d83053d5735df19780c1260f3daf338b150084c42b6ab473'; 
 
     useEffect(() => {
         if (wallet) {
