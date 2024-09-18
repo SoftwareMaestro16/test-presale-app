@@ -17,9 +17,7 @@ export const Header = ({ setBalance, setAddress }: HeaderProps) => {
             const address = toUserFriendlyAddress(wallet.account.address, wallet.account.chain === CHAIN.TESTNET);
             console.log('Connected wallet address:', address);
 
-            // Pass the address to the App component
             setAddress(address);
-
             getJettonBalance(address, jettonAddress)
                 .then(balance => setBalance(balance))
                 .catch(error => console.error('Error fetching balance:', error));
