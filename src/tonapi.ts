@@ -35,10 +35,9 @@ export async function getJettonWalletAddress(jettonMasterAddress: string, wallet
 }
 
 export async function getJettonBalance(connectedAddress: string, jettonAddress: string) {
-    // Format the URL with the provided placeholders
     const url = `https://testnet.tonapi.io/v2/accounts/${connectedAddress}/jettons/${jettonAddress}?currencies=ton,usd,rub&supported_extensions=custom_payload`;
 
-    console.log(`Fetching balance from URL: ${url}`); // Log the URL
+    console.log(`Fetching balance from URL: ${url}`);
 
     try {
         const response = await fetch(url, {
@@ -53,11 +52,10 @@ export async function getJettonBalance(connectedAddress: string, jettonAddress: 
         }
 
         const data = await response.json();
-        console.log('API response:', data); // Log the API response for debugging
+        console.log('API response:', data); 
         
-        // Extract and parse the balance
         const balance = parseFloat(data.balance);
-        const humanReadableBalance = balance / Math.pow(10, 6); // Convert from smallest unit to human-readable
+        const humanReadableBalance = balance / Math.pow(10, 6); 
         console.log(humanReadableBalance);
         
         return humanReadableBalance;
