@@ -119,7 +119,7 @@ function App() {
                 <a href="https://testnet.tonviewer.com/kQDSWPjYMkGidIqVUA6FpjuykW1YjAV-U3TtR2F2rDXqjNLc" className="link">Giver Contract</a>
               </h3>
               <h3>
-                <a href="https://testnet.tonviewer.com/kQBDXDfzKQPIO4xTfAXwLYGbwxynC6WQMnRcp08gkTMHmKZR" className="link">Lottery Contract</a>
+                <a href="https://testnet.tonviewer.com/0QCrrSnJR9bSL-3mRXl7Ollko-fDY9SkYn_i_AKKecIoUqJa" className="link">Lottery Contract</a>
               </h3>
             </div>
           </div>
