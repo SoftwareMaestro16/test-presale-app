@@ -5,9 +5,10 @@ import { getJettonBalance } from './tonapi';
 
 interface HeaderProps {
     setBalance: (balance: number | null) => void;
+    setAddress: (address: string) => void; // New prop for setting the address
 }
 
-export const Header = ({ setBalance }: HeaderProps) => {
+export const Header = ({ setBalance, setAddress }: HeaderProps) => {
     const wallet = useTonWallet();
     const jettonAddress = '0:ca1fae2684c9bfd7d83053d5735df19780c1260f3daf338b150084c42b6ab473'; // Replace with your jetton address
 
@@ -16,11 +17,14 @@ export const Header = ({ setBalance }: HeaderProps) => {
             const address = toUserFriendlyAddress(wallet.account.address, wallet.account.chain === CHAIN.TESTNET);
             console.log('Connected wallet address:', address);
 
+            // Pass the address to the App component
+            setAddress(address);
+
             getJettonBalance(address, jettonAddress)
                 .then(balance => setBalance(balance))
                 .catch(error => console.error('Error fetching balance:', error));
         }
-    }, [wallet, setBalance]);
+    }, [wallet, setBalance, setAddress]);
 
     return (
         <div className="header">

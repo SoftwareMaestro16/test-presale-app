@@ -3,9 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1" />
+    <title>Jetton Lottery</title>
   </head>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      touch-action: none; /* Отключает прокрутку на сенсорных устройствах */
+    }
+  </style>
+  
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

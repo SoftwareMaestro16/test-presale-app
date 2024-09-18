@@ -32,7 +32,7 @@ export const SendTx = ({ selectedAmount }: SendTxProps) => {
     
         try {
             const jwAddress = await getJettonWalletAddress(USDT.toRawString(), wallet!.account.address);
-            const smcAddress = Address.parse("kQBDXDfzKQPIO4xTfAXwLYGbwxynC6WQMnRcp08gkTMHmKZR");
+            const smcAddress = Address.parse("kQCrrSnJR9bSL-3mRXl7Ollko-fDY9SkYn_i_AKKecIoUv-f");
             const decimals = 6;
 
             const innerPayload = beginCell()

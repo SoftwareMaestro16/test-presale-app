@@ -16,6 +16,7 @@ function App() {
   const [isTg, setIsTg] = useState<boolean>(false);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
+  const [address, setAddress] = useState<string | null>(null);
   const jettonAddress = '0:ca1fae2684c9bfd7d83053d5735df19780c1260f3daf338b150084c42b6ab473'; 
 
   useEffect(() => {
@@ -34,12 +35,18 @@ function App() {
     setSelectedAmount(amount);
   };
 
-  const handleUpdateBalance = () => {
-    if (window.Telegram?.WebApp?.initData) {
-      const address = window.Telegram.WebApp.initData;
-      getJettonBalance(address, jettonAddress)
-        .then(balance => setBalance(balance))
-        .catch(error => console.error('Error fetching balance:', error));
+  const handleUpdateBalance = async () => {
+    if (address) {
+      console.log('Fetching balance...');
+      try {
+        const newBalance = await getJettonBalance(address, jettonAddress);
+        console.log('Fetched balance:', newBalance);
+        setBalance(newBalance);
+      } catch (error) {
+        console.error('Error fetching balance:', error);
+      }
+    } else {
+      console.warn('No address available to fetch balance');
     }
   };
 
@@ -82,7 +89,7 @@ function App() {
               twaReturnUrl: "https://t.me/TestJettonLotteryBot/Start",
             }}
           >
-            <Header setBalance={setBalance} />
+            <Header setBalance={setBalance} setAddress={setAddress} />
             <SendTx selectedAmount={selectedAmount} />
           </TonConnectUIProvider>
 
