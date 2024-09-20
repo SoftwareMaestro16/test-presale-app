@@ -58,25 +58,25 @@ function App() {
             uiPreferences={{
               borderRadius: "m",
               colorsSet: {
-                [THEME.LIGHT]: {
+                [THEME.DARK]: {
                   connectButton: {
-                    background: "#2191d1",
+                    background: "#f75f19", // Orange
                   },
-                  accent: "#2191d1",
-                  telegramButton: "#2191d1",
+                  accent: "#ffcc00", // Yellowish accent
+                  telegramButton: "#f7ad19", // Yellowish telegram button
                   background: {
-                    qr: "#ffffff",
-                    tint: "#2191d1",
-                    primary: "#2191d1",
-                    secondary: "#ffffff",
-                    segment: "#2191d1",
+                    qr: "#ffffff", // Keep QR background white for contrast
+                    tint: "#f7ad19", // Orange tint
+                    primary: "#f75f19", // Orange primary background
+                    secondary: "#ffe066", // Light yellow secondary background
+                    segment: "#ff9900", // Orange segment
                   },
                   text: {
-                    primary: "#ffffff",
-                    secondary: "#ffffff",
+                    primary: "#ffffff", // Keep primary text white for contrast
+                    secondary: "#ffffff", // Light yellow secondary text
                   },
                 },
-              },
+              },              
             }}
             actionsConfiguration={{
               modals: "all",
