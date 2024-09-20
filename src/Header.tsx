@@ -10,14 +10,14 @@ interface HeaderProps {
 
 export const Header = ({ setBalance, setAddress }: HeaderProps) => {
     const wallet = useTonWallet();
-    const jettonAddress = '0:ca1fae2684c9bfd7d83053d5735df19780c1260f3daf338b150084c42b6ab473'; 
+    const jettonAddress = 'kQBpqkbPrhSjleAQ8W9TJpZBj6K3GKijCH-Uz_6H7UnaqVTI'; 
 
     useEffect(() => {
         if (wallet) {
             const address = toUserFriendlyAddress(wallet.account.address, wallet.account.chain === CHAIN.TESTNET);
             console.log('Connected wallet address:', address);
 
-            setAddress(address);
+            setAddress(address); 
             getJettonBalance(address, jettonAddress)
                 .then(balance => setBalance(balance))
                 .catch(error => console.error('Error fetching balance:', error));

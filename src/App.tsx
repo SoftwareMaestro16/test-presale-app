@@ -4,7 +4,6 @@ import { SendTx } from "./SendTx.tsx";
 import { useEffect, useState } from "react";
 import WebAppSDK from '@twa-dev/sdk';
 import './App.css';
-import { getJettonBalance } from './tonapi';
 
 declare global {
   interface Window {
@@ -14,40 +13,36 @@ declare global {
 
 function App() {
   const [isTg, setIsTg] = useState<boolean>(false);
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
-  const [balance, setBalance] = useState<number | null>(null);
-  const [address, setAddress] = useState<string | null>(null);
-  const jettonAddress = '0:ca1fae2684c9bfd7d83053d5735df19780c1260f3daf338b150084c42b6ab473'; 
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(0.1); 
+  const [, setBalance] = useState<number | null>(null);
+  const [address, setAddress] = useState<string>(''); 
+  const [error, setError] = useState<string | null>(null); 
 
   useEffect(() => {
     const isTgCheck = Boolean(window.Telegram?.WebApp?.initData);
-
     if (isTgCheck) {
       WebAppSDK.ready();
       WebAppSDK.enableClosingConfirmation();
       WebAppSDK.expand();
-      WebAppSDK.headerColor = "#ffffff";
+      WebAppSDK.headerColor = "#f85717";
       setIsTg(true);
     }
   }, []);
 
-  const handleMiniButtonClick = (amount: number) => {
-    setSelectedAmount(amount);
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value);
+    if (value >= 0.1 && value <= 2) {
+      setSelectedAmount(value);
+      setError(null); 
+    } else {
+      setError('Value must be between 0.1 and 2 TON');
+    }
   };
 
-  const handleUpdateBalance = async () => {
-    if (address) {
-      console.log('Fetching balance...');
-      try {
-        const newBalance = await getJettonBalance(address, jettonAddress);
-        console.log('Fetched balance:', newBalance);
-        setBalance(newBalance);
-      } catch (error) {
-        console.error('Error fetching balance:', error);
-      }
-    } else {
-      console.warn('No address available to fetch balance');
-    }
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value);
+    setSelectedAmount(value);
+    setError(null); 
   };
 
   return (
@@ -86,40 +81,52 @@ function App() {
             actionsConfiguration={{
               modals: "all",
               notifications: ["error"],
-              twaReturnUrl: "https://t.me/TestJettonLotteryBot/Start",
+              twaReturnUrl: "https://t.me/TestMangoPresaleBot/Sale",
             }}
           >
             <Header setBalance={setBalance} setAddress={setAddress} />
-            <SendTx selectedAmount={selectedAmount} />
+            <SendTx selectedAmount={selectedAmount} connectedAddress={address} />
           </TonConnectUIProvider>
 
           <div className="texts-main">
-            <h1 className="first-t">Jetton Lottery</h1>
+            <h1 className="first-t">$MANGO Presale</h1>
             <h2 className="second-t">Testnet</h2>
-            <input type="number" className="styled-input" value={selectedAmount ?? ''} readOnly />
-            <div className="button-group">
-              <button className="mini-btn" onClick={() => handleMiniButtonClick(100)}>100</button>
-              <button className="mini-btn" onClick={() => handleMiniButtonClick(250)}>250</button>
-              <button className="mini-btn" onClick={() => handleMiniButtonClick(500)}>500</button>
-            </div>
-            <div className="styled-input2-container">
+
+            <div className="input-container">
               <input
-                type="text"
-                className="styled-input2"
-                value={`$USDT: ${balance !== null ? balance : '~'}`}
-                readOnly
+                type="number"
+                className={`styled-input ${error ? 'error' : ''}`} 
+                value={selectedAmount ?? ''}
+                onChange={handleAmountChange}
+                placeholder="Enter amount"
+                min="0.1"
+                max="2"
+                step="0.01"
               />
-              <button className="update-btn" onClick={handleUpdateBalance}>🔄</button>
+              {error && <p className="error-message">{error}</p>} {/* Show error message */}
             </div>
+
+            <div className="slider-container">
+              <input
+                type="range"
+                className="slider"
+                min="0.1"
+                max="2"
+                step="0.01"
+                value={selectedAmount ?? 0.1}
+                onChange={handleSliderChange}
+              />
+            </div>
+
             <div className="links-container">
-              <h3>
-                <a href="https://t.me/testgiver_ton_bot" className="link">Testnet TON</a>
+              {/* <h3>
+                <a className="link">Your Share: ~</a>
               </h3>
               <h3>
-                <a href="https://testnet.tonviewer.com/kQDSWPjYMkGidIqVUA6FpjuykW1YjAV-U3TtR2F2rDXqjNLc" className="link">Giver Contract</a>
-              </h3>
+                <a className="link">Getting Jetton: ~</a>
+              </h3> */}
               <h3>
-                <a href="https://testnet.tonviewer.com/0QCrrSnJR9bSL-3mRXl7Ollko-fDY9SkYn_i_AKKecIoUqJa" className="link">Lottery Contract</a>
+                <a href="https://testnet.getgems.io/collection/kQAGpsRVIcQgmHmFIATRZ8RKAg_Qguk6hnBhBrQTuZYaMGm2" className="link">View Participants</a>
               </h3>
             </div>
           </div>
